@@ -13,9 +13,10 @@ router.get("", async (req, resp) => {  //homepage
             description: "Blog created with NodeJS, Express and MongoDB"
         }
 
-        let perPage = 10
-        let page = req.query.page || 1
+        let perPage = 10  //display at a time 
+        let page = req.query.page || 1   //localhost:5000?page=2   
 
+        // sorting, -1 makes the oldest go to the top
         const data = await Post.aggregate([{
             $sort: { createdAt: -1 }
         }]).skip(perPage * page - perPage).limit(perPage).exec()
@@ -68,7 +69,8 @@ router.post("search", async (req, resp) => {
         let searchTerm = req.body.searchTerm
         const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9]/g, "")
 
-        const data = await Post.find({
+        const data = await Post.find({  
+            // .find Creates a find query: gets a list of documents that match filter.
             $or: [
                 { title: { $regex: new RegExp(searchNoSpecialChar, "i")}},
                 { body: { $regex: new RegExp(searchNoSpecialChar, "i")}}
