@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema   //Database, each post will have the following
 const PostSchema = new Schema({
     title: {
         type: String, 
