@@ -38,6 +38,7 @@ router.get("", async (req, resp) => {  //homepage
     }
 })
 
+//getting a single blog post 
 router.get("/post/:id", async (req, resp) => {
     try {
         let slug = req.params.id
@@ -59,7 +60,7 @@ router.get("/post/:id", async (req, resp) => {
 })
 
 
-router.post("search", async (req, resp) => {
+router.post("/search", async (req, resp) => {
     try {
         const locals = {
             title: "Search", 
