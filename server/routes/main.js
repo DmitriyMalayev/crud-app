@@ -1,6 +1,6 @@
 const express = require("express")   //required to use router 
 const router = express.Router();
-const Post = require("../models/Post")  
+const Post = require("../models/Post")
 
 
 
@@ -59,30 +59,29 @@ router.get("/post/:id", async (req, resp) => {
     }
 })
 
-
 router.post("/search", async (req, resp) => {
     try {
         const locals = {
-            title: "Search", 
+            title: "Search",
             description: "Blog created with NodeJS, Express, and MongoDB"
         }
 
         let searchTerm = req.body.searchTerm
         const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9]/g, "")
 
-        const data = await Post.find({  
+        const data = await Post.find({
             // .find Creates a find query: gets a list of documents that match filter.
             $or: [
-                { title: { $regex: new RegExp(searchNoSpecialChar, "i")}},
-                { body: { $regex: new RegExp(searchNoSpecialChar, "i")}}
+                { title: { $regex: new RegExp(searchNoSpecialChar, "i") } },
+                { body: { $regex: new RegExp(searchNoSpecialChar, "i") } }
             ]
-        }); 
+        });
         resp.render("search", {
-            data, 
-            locals, 
+            data,
+            locals,
             currentRoute: "/"
         });
-    } catch (error){
+    } catch (error) {
         console.log(error)
     }
 })
