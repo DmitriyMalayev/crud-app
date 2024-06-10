@@ -5,7 +5,7 @@ const expressLayout = require("express-ejs-layouts")
 const connectDB = require("./server/config/db.js")
 
 const app = express()
-const PORT = 5002 || process.env.PORT; 
+const PORT = 5001 || process.env.PORT; 
 
 connectDB()
 app.use(express.urlencoded({extended: true}))
