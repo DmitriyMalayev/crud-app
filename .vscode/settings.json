@@ -1,4 +1,8 @@
 {
     "files.autoSave": "afterDelay",
-    "editor.suggest.showFolders": true
+    "editor.suggest.showFolders": true,
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true
 }
