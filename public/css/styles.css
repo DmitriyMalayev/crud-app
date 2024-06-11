@@ -28,11 +28,11 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: -1;     /* Place behind the content */
   background-image: url("/img/noise.jpeg");
+  z-index: -1;     /* Place behind the content */
   background-size: cover;
   background-position: center;
-  opacity: 0.1;    /* 60% opacity */
+  opacity: 0.1;  
 }
 a { color: var(--black); }
 h1 { font-size: var(--font-size-xl); }
@@ -78,7 +78,7 @@ img {
 /* Layout */
 .container {
   max-width: 982px;
-  margin: 0 auto;
+  margin: 0 auto;   /* centers page  */
   padding: 0 10px;
 }
 
@@ -91,6 +91,10 @@ img {
   filter: drop-shadow(0px 44px 34px rgba(0, 0, 0, 0.25));
   overflow: hidden;
   border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scale: 80%;
 }
 
 
@@ -111,6 +115,7 @@ img {
     grid-template-columns: auto 1fr auto;
     grid-template-areas: 
     "logo menu button";
+    background-color: #ffffff11;
   }
 }
 
@@ -163,7 +168,7 @@ img {
 .header__nav ul {
   list-style-type: none;
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
   font-weight: 600;
   padding: 0;
 }
@@ -171,17 +176,17 @@ img {
 .header__nav ul a {
   padding: 10px;
   text-decoration: none;
+
 }
 
 .header__nav ul a.active {
-  color: #7E7E7E;
+  color: #0091ff;
 }
 
 .header__nav ul a:hover {
   text-decoration: underline;
 }
 
-/* Author - HomePage */
 .author {
   padding: 10px 0;
   text-align: center;
@@ -205,17 +210,17 @@ img {
 }
 
 .article-ul {
+  font-size: clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem);
   list-style-type: none;
   padding: 0;
   margin: 0;
-  font-size: clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem);
   display: flex;
   flex-direction: column;
 }
 
 .article-list__date {
-  font-size: 1rem;
-  color: var(--gray);
+  font-size: clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem);
+  color: var(--black);
   width: 100px;
   display: inline-block;
   width: 260px;
@@ -241,7 +246,7 @@ img {
 }
 
 .article-ul li {
-  font-size: 24px;
+  font-size: clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem);
   cursor: pointer;
   transition: filter 0.1s;
 }
@@ -270,7 +275,8 @@ img {
 
 /* Footer */
 .footer {
-  margin: 4rem;
+  font-size: 20px;
+  margin: 5rem;
   text-align: center;
 }
 
@@ -317,8 +323,8 @@ img {
   position: absolute;
   left: 0;
   right: 0;
+  cursor: pointer;
 }
-
 
 .searchBar.open {
   transform: translateY(0);
@@ -328,6 +334,18 @@ img {
 .searchBar input {
   margin: 0;
   border: 0;
+}
+
+.searchBtn {
+    cursor: pointer;
+}
+.searchBtn i {
+    margin-left: 8px; /* Adjust for spacing */
+}
+
+.searchBtn i {
+    font-size: 16px;
+    color: #ba8585; /* Example color */
 }
 
 #searchClose {
