@@ -7,6 +7,8 @@
   --gray: #7E7E7E;
   --gray-light: #E4E4E4;
   --red: #b30000;
+  --blue: #001bc7;
+
   --font-size-base: 1rem;
   --font-size-md: clamp(1.25rem, 0.61vw + 1.1rem, 1.58rem);  /* min, val, max */
   --font-size-lg: clamp(1.56rem, 1vw + 1.31rem, 2.11rem);
@@ -317,18 +319,19 @@ img {
 /* SeachBar */
 .searchBar {
   visibility: hidden;
-  transform: translateY(-100px);
+  transform: translateY(-100%); /* Push entirely offscreen */
   background-color: var(--black);
   padding: 4px 0;
-  position: absolute;
+  position: fixed; /* Ensures positioning relative to the viewport */
+  top: 0;          /* Align to the top */
   left: 0;
   right: 0;
-  cursor: pointer;
+  z-index: 100;   /* Ensure it's above other content */
+  transition: transform 0.6s ease; /* Add a smoother transition */
 }
 
 .searchBar.open {
   transform: translateY(0);
-  transition: transform 0.1s;
 }
 
 .searchBar input {
@@ -359,12 +362,12 @@ img {
 
 .pagination {
   font-size: 1.3rem;
-  color: var(--gray);
-  text-decoration: none;
+  color: var(--black);
+  text-decoration: #0091ff;
   margin-top: 40px;
   display: inline-block;
 }
 
 .pagination:hover {
-  color: var(--black);
+  color: var(--blue);
 }
