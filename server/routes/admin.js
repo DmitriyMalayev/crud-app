@@ -32,7 +32,7 @@ router.get('/admin', async (req, res) => {
             title: "Admin",
             description: "Admin Page"
         }
-        res.render('admin/index', { locals, layout: adminLayout });
+        res.render('admin/index', { locals, layout: adminLayout, currentRoute: "/admin" });
     } catch (error) {
         console.log(error);
     }
@@ -76,7 +76,8 @@ router.get('/dashboard', authMiddleware, async (req, res) => {  //authMiddleware
         res.render('admin/dashboard', {
             locals,
             data,
-            layout: adminLayout
+            layout: adminLayout,
+            currentRoute: "/dashboard"
         });
 
     } catch (error) {
@@ -90,12 +91,13 @@ router.get('/add-post', authMiddleware, async (req, res) => {
     try {
         const locals = {
             title: 'Add Post',
-            description: 'Simple Blog created with NodeJs, Express & MongoDb.'
+            description: 'Simple Blog created with NodeJs, Express & MongoDB.'
         }
 
         res.render('admin/add-post', {
             locals,
-            layout: adminLayout
+            layout: adminLayout,
+            currentRoute: "/admin/add-post"
         });
 
     } catch (error) {
@@ -138,7 +140,8 @@ router.get('/edit-post/:id', authMiddleware, async (req, res) => {
         res.render('admin/edit-post', {
             locals,
             data,
-            layout: adminLayout
+            layout: adminLayout,
+            currentRoute: "/admin/edit-post"
         })
 
     } catch (error) {
@@ -168,11 +171,12 @@ router.put('/edit-post/:id', authMiddleware, async (req, res) => {
 router.post('/register', async (req, res) => {
     try {
         const { username, password } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 10)
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         try {
             const user = await User.create({ username, password: hashedPassword });
-            res.status(201).json({ message: 'User Created', user });
+            // res.status(201).json({ message: 'User Created', user });
+            res.redirect('/dashboard');
         } catch (error) {
             if (error.code === 11000) {
                 res.status(409).json({ message: 'User already in use' });
