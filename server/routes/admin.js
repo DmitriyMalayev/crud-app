@@ -1,22 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const Post = require('../models/Post');
-const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Post = require('../models/Post');
+const User = require('../models/User');
 
 const adminLayout = '../views/layouts/admin';
 const jwtSecret = process.env.JWT_SECRET;
 
 
-/**
- * 
- * Check Login
-*/
 const authMiddleware = (req, res, next) => {
     const token = req.cookies.token;
 
-    if (!token) {
+    if (!token) {  //will crash without this. Security safe guard. 
         return res.status(401).json({ message: 'Unauthorized' });
     }
 
@@ -30,17 +26,12 @@ const authMiddleware = (req, res, next) => {
 }
 
 
-/**
- * GET /
- * Admin - Login Page
-*/
 router.get('/admin', async (req, res) => {
     try {
         const locals = {
             title: "Admin",
-            description: "Simple Blog created with NodeJs, Express & MongoDb."
+            description: "Admin Page"
         }
-
         res.render('admin/index', { locals, layout: adminLayout });
     } catch (error) {
         console.log(error);
@@ -48,15 +39,11 @@ router.get('/admin', async (req, res) => {
 });
 
 
-/**
- * POST /
- * Admin - Check Login
-*/
 router.post('/admin', async (req, res) => {
     try {
         const { username, password } = req.body;
 
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ username });  //check if it's in DB
 
         if (!user) {
             return res.status(401).json({ message: 'Invalid credentials' });
@@ -78,11 +65,7 @@ router.post('/admin', async (req, res) => {
 });
 
 
-/**
- * GET /
- * Admin Dashboard
-*/
-router.get('/dashboard', authMiddleware, async (req, res) => {
+router.get('/dashboard', authMiddleware, async (req, res) => {  //authMiddleware password protects routes 
     try {
         const locals = {
             title: 'Dashboard',
@@ -103,10 +86,6 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
 });
 
 
-/**
- * GET /
- * Admin - Create New Post
-*/
 router.get('/add-post', authMiddleware, async (req, res) => {
     try {
         const locals = {
@@ -127,10 +106,6 @@ router.get('/add-post', authMiddleware, async (req, res) => {
 });
 
 
-/**
- * POST /
- * Admin - Create New Post
-*/
 router.post('/add-post', authMiddleware, async (req, res) => {
     try {
         try {
@@ -151,10 +126,6 @@ router.post('/add-post', authMiddleware, async (req, res) => {
 });
 
 
-/**
- * GET /
- * Admin - Create New Post
-*/
 router.get('/edit-post/:id', authMiddleware, async (req, res) => {
     try {
 
@@ -178,10 +149,6 @@ router.get('/edit-post/:id', authMiddleware, async (req, res) => {
 });
 
 
-/**
- * PUT /
- * Admin - Create New Post
-*/
 router.put('/edit-post/:id', authMiddleware, async (req, res) => {
     try {
 
@@ -200,30 +167,10 @@ router.put('/edit-post/:id', authMiddleware, async (req, res) => {
 });
 
 
-// router.post('/admin', async (req, res) => {
-//   try {
-//     const { username, password } = req.body;
-
-//     if(req.body.username === 'admin' && req.body.password === 'password') {
-//       res.send('You are logged in.')
-//     } else {
-//       res.send('Wrong username or password');
-//     }
-
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
-
-
-/**
- * POST /
- * Admin - Register
-*/
 router.post('/register', async (req, res) => {
     try {
         const { username, password } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10)
 
         try {
             const user = await User.create({ username, password: hashedPassword });
@@ -240,11 +187,6 @@ router.post('/register', async (req, res) => {
     }
 });
 
-
-/**
- * DELETE /
- * Admin - Delete Post
-*/
 router.delete('/delete-post/:id', authMiddleware, async (req, res) => {
 
     try {
@@ -257,10 +199,6 @@ router.delete('/delete-post/:id', authMiddleware, async (req, res) => {
 });
 
 
-/**
- * GET /
- * Admin Logout
-*/
 router.get('/logout', (req, res) => {
     res.clearCookie('token');
     //res.json({ message: 'Logout successful.'});
