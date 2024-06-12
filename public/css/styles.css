@@ -79,7 +79,9 @@ textarea {
   padding: 10px 16px;
   background-color: var(--red);
 }
-
+.error-notification {
+  color: var(--red);
+}
 
 img {
   width: 100%;

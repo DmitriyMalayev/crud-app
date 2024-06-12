@@ -38,33 +38,39 @@ router.get('/admin', async (req, res) => {
     }
 });
 
-
 router.post('/admin', async (req, res) => {
+    const { username, password } = req.body;
+
     try {
-        const { username, password } = req.body;
-
-        const user = await User.findOne({ username });  //check if it's in DB
-
-        if (!user) {
-            return res.status(401).json({ message: 'Invalid credentials' });
+        // Check if username and password were provided
+        if (!username || !password) {
+            return res.render('admin/index', {
+                message: 'Please enter both username and password.',
+                currentRoute: "admin"
+            });
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        const user = await User.findOne({ username });
 
-        if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Invalid credentials' });
+        if (!user || !await bcrypt.compare(password, user.password)) {
+            return res.render('admin/index', {
+                message: 'Invalid credentials.',
+                currentRoute: "admin"
+            });
         }
 
+        // Successful login
         const token = jwt.sign({ userId: user._id }, jwtSecret);
         res.cookie('token', token, { httpOnly: true });
         res.redirect('/dashboard');
-
     } catch (error) {
-        console.log(error);
+        console.error('Login error:', error);
+        res.render('admin/index', {
+            message: 'An error occurred during login. Please try again.',
+            currentRoute: "admin"
+        });
     }
 });
-
-
 router.get('/dashboard', authMiddleware, async (req, res) => {  //authMiddleware password protects routes 
     try {
         const locals = {

@@ -1,12 +1,5 @@
 <h3>Sign In</h3>
-<h1>
-    <% if(errorMessage===null ){ %>
-        <p>Welcome Code_Breaker!</p>
-        <% } else { %>
-            <p>You are not Code_Breaker</p>
-            <% } %>
 
-</h1>
 <form action="/admin" method="POST">
     <label for="username"><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="username">
@@ -17,6 +10,19 @@
     <input type="submit" value="login" class="btn">
 </form>
 
+<div id="messageContainer" class="message">
+    <% if (typeof message !=='undefined' ) { %>
+        <h3>
+            <%= message %>
+        </h3>
+        <% } %>
+</div>
+<script>
+    setTimeout(function () {
+        document.getElementById('messageContainer').style.display = 'none';
+    }, 5000); // 5000 milliseconds = 5 seconds
+</script>
+
 <h3>Register</h3>
 <form action="/register" method="POST">
     <label for="username"><b>Username</b></label>
@@ -26,4 +32,5 @@
     <input type="password" placeholder="Enter Password" name="password">
 
     <input type="submit" value="register" class="btn">
+
 </form>
