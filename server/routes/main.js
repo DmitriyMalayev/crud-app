@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 
-router.get("", async (req, resp) => {
+router.get("/", async (req, resp) => {
     try {
         const locals = {
             title: "NodeJs Blogs Home",
@@ -39,6 +39,7 @@ router.get("/about", async (req, resp) => {
     };
     resp.render('about', { locals, currentRoute: "/about" },)
 })
+
 router.get("/contact", async (req, resp) => {
     const locals = {
         title: "NodeJs Blogs Contact",
@@ -46,7 +47,6 @@ router.get("/contact", async (req, resp) => {
     };
     resp.render('contact', { locals, currentRoute: "/contact" })
 })
-
 
 router.get('/post/:id', async (req, res) => {
     try {
