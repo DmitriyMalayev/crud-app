@@ -93,7 +93,6 @@ router.get('/add-post', authMiddleware, async (req, res) => {
             description: 'Simple Blog created with NodeJs, Express & MongoDb.'
         }
 
-        const data = await Post.find();
         res.render('admin/add-post', {
             locals,
             layout: adminLayout
@@ -151,7 +150,6 @@ router.get('/edit-post/:id', authMiddleware, async (req, res) => {
 
 router.put('/edit-post/:id', authMiddleware, async (req, res) => {
     try {
-
         await Post.findByIdAndUpdate(req.params.id, {
             title: req.body.title,
             body: req.body.body,
@@ -188,14 +186,12 @@ router.post('/register', async (req, res) => {
 });
 
 router.delete('/delete-post/:id', authMiddleware, async (req, res) => {
-
     try {
         await Post.deleteOne({ _id: req.params.id });
         res.redirect('/dashboard');
     } catch (error) {
         console.log(error);
     }
-
 });
 
 

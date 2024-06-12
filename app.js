@@ -2,8 +2,11 @@ require('dotenv').config(); // Load environment variables from .env file
 
 const express = require("express");
 const expressLayout = require("express-ejs-layouts");
+const methodOverride = require("method-override")
 const cookieParser = require("cookie-parser")
 const session = require('express-session');
+const { isActiveRoute } = require("./server/helpers/routeHelpers.js")
+
 
 const MongoStore = require("connect-mongo")
 
@@ -15,6 +18,7 @@ const PORT = process.env.PORT || 5001; // Use environment variable, then fallbac
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(express.json()); // Parse JSON bodies
 app.use(cookieParser())
+app.use(methodOverride("_method"))
 
 app.use(session({
     secret: 'keyboard cat',
@@ -32,6 +36,7 @@ app.use(express.static('public')); // Serve static files (CSS, images, etc.)
 app.use(expressLayout);
 app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
+app.locals.isActiveRoute = isActiveRoute
 
 // Database Connection
 const connectDB = require("./server/config/db.js");

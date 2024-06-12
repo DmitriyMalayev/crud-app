@@ -190,8 +190,8 @@ img {
 
 }
 
-.header__nav ul a.active {
-  color: #0091ff;
+.header__nav ul a.active  {
+  color: var(--blue) 
 }
 
 .header__nav ul a:hover {
