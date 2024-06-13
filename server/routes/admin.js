@@ -13,7 +13,7 @@ const authMiddleware = (req, res, next) => {
     const token = req.cookies.token;
 
     if (!token) {  //will crash without this. Security safe guard. 
-        return res.status(401).json({ message: 'Unauthorized' });
+        return res.status(401).render("admin/index", { message: 'Login Required!', currentRoute: "admin" });
     }
 
     try {
